@@ -1,9 +1,6 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+# 👨🏿‍⚕️ Diabetes Prediction App
 
-Description of the app ...
+This is an app designed to apply knowledge learned from my from my first semester of grad school. This is purely a fun project and is not meant to serve as a diagnostic tool for diabetes. I am not a medical professional so please do not take the results seriously. 
 
 ## Demo App
 
