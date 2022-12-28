@@ -1,7 +1,7 @@
 import streamlit as st
 from algorithm import *
 
-st.title('🎈 App Name')
+st.title('👨🏿‍⚕️ Diabetes Predictor')
 
 st.write('Hello world!')
 
