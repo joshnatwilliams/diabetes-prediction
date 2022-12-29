@@ -1,4 +1,5 @@
 import streamlit as st
+import matplotlib.pyplot as plt
 from algorithm import *
 
 st.set_page_config(
@@ -6,7 +7,7 @@ st.set_page_config(
     page_icon = '👨🏿‍⚕️',
 )
 
-st.title('👨🏿‍⚕️ Diabetes Predictor')
+st.title('⚕️ Diabetes Predictor')
 
 intro = st.container()
 calc = st.container()
@@ -33,9 +34,9 @@ with calc:
             
             Age = st.number_input(
                 'Age',
-                min_value = 0,
-                max_value = 100,
-                value = 21
+                min_value = 1,
+                max_value = 13,
+                value = 1
             )
             Sex = st.radio(
                 'What is your sex?',
@@ -89,7 +90,7 @@ with calc:
                 min_value = 1,
                 max_value = 5
             )
-            MentHlthBMIval = st.number_input(
+            MentHlth = st.number_input(
                 'In the past 30 days, how many day have you had poor mental health?',
                 min_value = 0,
                 max_value = 30,
@@ -113,15 +114,48 @@ with calc:
             )
 
             submit = st.form_submit_button('Submit')
-        
 
-        
-        
 
     with col2:
         st.subheader('Results')
 
+        def val_to_bin(val):
+            if val == "No" or "Female":
+                return 0
+            elif val == "Yes" or "Male":
+                return 1
+
+
+        user_input = pd.DataFrame(
+            {
+                'Age': Age, 
+                'Sex': val_to_bin(Sex),
+                'HighChol': val_to_bin(HighChol),
+                'CholCheck': val_to_bin(CholCheck),
+                'BMI': BMIval,
+                'Smoker': val_to_bin(Smoker),
+                'HeartDiseaseorAttack': val_to_bin(HeartDiseaseorAttack),
+                'PhysActivity': val_to_bin(PhysActivity),
+                'Fruits': val_to_bin(Fruits),
+                'Veggies': val_to_bin(Veggies),
+                'HvyAlcoholConsump': val_to_bin(HvyAlcoholConsump),
+                'GenHlth': GenHlth,
+                'MentHlth': MentHlth,
+                'PhysHlth': PhysHlth,
+                'DiffWalk': val_to_bin(DiffWalk),
+                'Stroke': val_to_bin(Stroke),
+                'HighBP': val_to_bin(HighBP),
+            },index=[0]
+        )
+        
         if submit:
-            pass
+            if svc.predict(user_input) == [0.]:
+                pred = "No"
+            elif svc.predict(user_input) == [1.]:
+                pred = "Yes"
+            st.write("Classification: {}".format(pred))
+            st.write("Likelihood: {0:.2%}".format(max(svc.predict_proba(user_input)[0])))
+
+            
 
 
